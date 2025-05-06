@@ -1,8 +1,8 @@
 package database
 
 import (
+	"goauthenticator/environment"
 	"log"
-	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -13,7 +13,7 @@ var DB *gorm.DB
 func ConectarDB() {
 	var err error
 
-	dsn := os.Getenv("DATABASE_DSN")
+	dsn := environment.GetDSN()
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
