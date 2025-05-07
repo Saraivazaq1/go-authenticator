@@ -10,7 +10,7 @@ Após clonar o projeto é necessário renomear o arquivo `.env.example` para `.e
 ```bash
 cp .env.example .env
 ```
-Após isso é necessário preencher os valores das variáveis de ambiente com as informações dos banco de dados.
+Após isso é necessário preencher os valores das variáveis de ambiente com as informações dos banco de dados e do token de autenticação.
 
 ## Execução
 1- Atualize dependências
