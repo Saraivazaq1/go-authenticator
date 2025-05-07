@@ -3,6 +3,7 @@ package environment
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
@@ -14,8 +15,12 @@ var (
 	DBPort     string
 	DBName     string
 	DBSSLMode  string
-	JWTSecret  string
+
+	TokenKey = []byte(os.Getenv("TOKEN_SECRET"))
+	TokenExpirationTime = os.Getenv(("TOKEN_EXPIRATION_TIME"))
 )
+
+
 
 func init() {
 	err := godotenv.Load()
@@ -38,4 +43,12 @@ func GetDSN() string {
 		" port=" + DBPort +
 		" dbname=" + DBName +
 		" sslmode=" + DBSSLMode
+}
+
+func GetTokenExpirationMinutes() int {
+	minutes, err := strconv.Atoi(TokenExpirationTime)
+	if err != nil {
+		return 60
+	}
+	return minutes
 }
