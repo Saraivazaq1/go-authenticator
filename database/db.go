@@ -14,8 +14,10 @@ var DB *gorm.DB
 func ConectarDB() {
 	var err error
 
+	// Declaração do dsn
 	dsn := environment.GetDSN()
 
+	// Instancia do banco de dados
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Error),
 	})

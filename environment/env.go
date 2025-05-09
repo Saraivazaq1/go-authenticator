@@ -20,8 +20,6 @@ var (
 	TokenExpirationTime = os.Getenv(("TOKEN_EXPIRATION_TIME"))
 )
 
-
-
 func init() {
 	err := godotenv.Load()
 	if err != nil {
@@ -36,6 +34,7 @@ func init() {
 	DBSSLMode = os.Getenv("DB_SSLMODE")
 }
 
+// Formatação das variáveis de ambiente
 func GetDSN() string {
 	return "user=" + DBUser +
 		" password=" + DBPassword +
@@ -45,6 +44,7 @@ func GetDSN() string {
 		" sslmode=" + DBSSLMode
 }
 
+// Tempo de expiração do token
 func GetTokenExpirationMinutes() int {
 	minutes, err := strconv.Atoi(TokenExpirationTime)
 	if err != nil {

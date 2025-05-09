@@ -14,30 +14,36 @@ import (
 
 func Login(ctx *gin.Context) {
 
+	// Entrada de dados
 	var input struct {
 		Username string `json:"username" binding:"required"`
 		Password string `json:"password" binding:"required"`
 	}
 
+	// Verificação de erros
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Não possível entrar"})
 	}
 
+	// Instancia da struct
 	var user models.User
 
+	// Verificação de erros
 	if err := database.DB.First(&user, "username = ?", input.Username).Error; err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Credenciais inválidas"})
 	}
 
+	// Comparação da senha e do hash
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(input.Password)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Credenciais inválidas"})
 	}
 
 	// Criando o token de autenticação
+	expiration := time.Now().Add(time.Duration(environment.GetTokenExpirationMinutes()) * time.Minute)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"username": user.ID,
-			"exp":      time.Now().Add(time.Duration(environment.GetTokenExpirationMinutes())).Unix(),
+			"exp":      expiration.Unix(),
 		})
 
 	tokenString, err := token.SignedString(environment.TokenKey)
