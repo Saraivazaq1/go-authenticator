@@ -1,7 +1,6 @@
 # Sistema de autenticação em Go
-> Projeto não terminado
 
-Um sistema feito para o registro e login de usuários utilizando a autenticação.
+Um sistema feito para o registro e login de usuários utilizando um sistema de autenticação via tokens JWT.
 
 ---
 ## Importante
@@ -23,7 +22,7 @@ go mod tidy
 gin run main.go
 ```
 
-3- Abra o arquivo (por padrão está na porta 3000)
+3- Abra o arquivo (por padrão está na porta 3000, a home page está na rota padrão "/")
 ```bash
-localhost:3000
+localhost:3000/
 ```
