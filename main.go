@@ -1,9 +1,9 @@
 package main
 
 import (
-	"goauthenticator/database"
-	"goauthenticator/models"
-	"goauthenticator/routes"
+	"goauthenticator/backend/database"
+	"goauthenticator/backend/models"
+	"goauthenticator/backend/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +18,12 @@ func main() {
 
 	// Instancia o servidor
 	router := gin.Default()
+
+	// Renderizando o HTML e conectando os arquivos estáticos
+	router.LoadHTMLGlob("frontend/templates/*")
+	router.Static("/styles", "./frontend/styles")
+	router.Static("/scripts", "./frontend/scripts")
+
 	routes.ConfigurarRotas(router)
 	router.Run()
 }

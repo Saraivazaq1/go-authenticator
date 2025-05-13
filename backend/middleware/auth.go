@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"goauthenticator/database"
-	"goauthenticator/environment"
-	"goauthenticator/models"
+	"goauthenticator/backend/database"
+	"goauthenticator/backend/environment"
+	"goauthenticator/backend/models"
 	"net/http"
 	"strings"
 

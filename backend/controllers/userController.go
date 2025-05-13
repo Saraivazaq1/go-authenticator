@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"goauthenticator/models"
+	"goauthenticator/backend/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

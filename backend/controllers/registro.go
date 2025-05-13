@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"goauthenticator/database"
-	"goauthenticator/environment"
-	"goauthenticator/models"
+	"goauthenticator/backend/database"
+	"goauthenticator/backend/environment"
+	"goauthenticator/backend/models"
 	"net/http"
 	"time"
 
@@ -60,7 +60,7 @@ func Registrar(ctx *gin.Context) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"username": user.ID,
-			"exp":      time.Now().Add(time.Duration(environment.GetTokenExpirationMinutes())).Unix(),
+			"exp":      time.Now().Add(time.Duration(environment.GetTokenExpirationMinutes()) * time.Minute).Unix(),
 		})
 
 	tokenString, err := token.SignedString(environment.TokenKey)

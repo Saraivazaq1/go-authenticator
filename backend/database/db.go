@@ -1,7 +1,7 @@
 package database
 
 import (
-	"goauthenticator/environment"
+	"goauthenticator/backend/environment"
 	"log"
 
 	"gorm.io/driver/postgres"

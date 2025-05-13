@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"goauthenticator/database"
-	"goauthenticator/environment"
-	"goauthenticator/models"
+	"goauthenticator/backend/database"
+	"goauthenticator/backend/environment"
+	"goauthenticator/backend/models"
 	"net/http"
 	"time"
 
@@ -23,6 +23,7 @@ func Login(ctx *gin.Context) {
 	// Verificação de erros
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Não possível entrar"})
+		return
 	}
 
 	// Instancia da struct
@@ -31,11 +32,13 @@ func Login(ctx *gin.Context) {
 	// Verificação de erros
 	if err := database.DB.First(&user, "username = ?", input.Username).Error; err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Credenciais inválidas"})
+		return
 	}
 
 	// Comparação da senha e do hash
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(input.Password)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Credenciais inválidas"})
+		return
 	}
 
 	// Criando o token de autenticação
